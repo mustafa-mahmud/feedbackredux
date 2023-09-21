@@ -18,7 +18,8 @@ export const fetchFeedback = createAsyncThunk(
 
       return data;
     } catch (error) {
-      thunkAPI.rejectWithValue('Something went wrong when "FETCH" data...');
+      console.log(error);
+      thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -31,7 +32,7 @@ export const deleteFeedback = createAsyncThunk(
         method: 'DELETE',
       });
     } catch (error) {
-      thunkAPI.rejectWithValue('Something went wrong when "DELETE" data...');
+      thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -51,7 +52,7 @@ export const addFeedback = createAsyncThunk(
 
       return newData;
     } catch (error) {
-      thunkAPI.rejectWithValue('Something went wrong when "ADD" data...');
+      thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -71,7 +72,7 @@ export const editFeedback = createAsyncThunk(
 
       return data;
     } catch (error) {
-      thunkAPI.rejectWithValue('Something went wrong when "EDIT" data...');
+      thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -114,6 +115,7 @@ const feedbackSlice = createSlice({
     });
     builder.addCase(fetchFeedback.rejected, (state, action) => {
       state.isLoading = false;
+      state.errMsg = action.payload;
     });
     /* add */
     builder.addCase(addFeedback.pending, (state) => {
